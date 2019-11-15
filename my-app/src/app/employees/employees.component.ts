@@ -15,6 +15,7 @@ export class EmployeesComponent implements OnInit {
 
   registerForm;
   submitted: boolean;
+  employee :object;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,8 +25,8 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employeesService.GetList().subscribe((data) => {
-      console.log(data);
+    this.employeesService.GetList().subscribe((response:any) => {
+    this.employee = response.body;
     });
   }
 }
