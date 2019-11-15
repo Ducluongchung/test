@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { EmployeesService } from "../services/employees.service"
+
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.css']
+  styleUrls: ['./employees.component.css'],
+  providers: [EmployeesService]
+
 })
 export class EmployeesComponent implements OnInit {
 
@@ -12,25 +17,15 @@ export class EmployeesComponent implements OnInit {
   submitted: boolean;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private employeesService: EmployeesService
   ) {
 
   }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required],
+    this.employeesService.GetList().subscribe((data) => {
+      console.log(data);
     });
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    // stop the process here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
-    }
-    console.log(this.registerForm.value);
   }
 }
